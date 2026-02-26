@@ -8,7 +8,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState(0);
   const [showArrow, setShowArrow] = useState(true);
   
-  // 修正點：必須明確指定型別為 HTMLDivElement，否則 Vercel 會報錯
+  // 修正點：定義型別並初始化 Ref 陣列
   const scrollRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -20,7 +20,7 @@ export default function Home() {
     return () => clearInterval(timer);
   }, []);
 
-  // 聯動功能：當 activeTab 改變時，上方選單自動將該標籤置中
+  // 聯動功能：將選單標籤置中
   useEffect(() => {
     const container = navRef.current;
     if (container && container.children[activeTab]) {
@@ -35,14 +35,14 @@ export default function Home() {
       title: "🔥 招牌炸物 (可素食)",
       items: [
         { name: "香酥臭豆腐", price: "60", note: "招牌必點", desc: "外皮極致酥脆，搭配手工台式泡菜與獨門醬汁。", img: "https://images.unsplash.com/photo-1563245372-f21724e3856d?q=80&w=800" },
-        { name: "脆皮豆腸", price: "60", note: "外酥內 Q", desc: "特製豆捲炸至金黃，層次分明，咬下瞬間豆香與酥脆感交織。", img: "https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?q=80&w=800" },
+        { name: "脆皮豆腸", price: "60", note: "外酥內 Q", desc: "特製豆捲炸至金黃，層次分明，老饕最愛。", img: "https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?q=80&w=800" },
         { name: "綜合 (豆腐+豆腸)", price: "60", note: "一次滿足", desc: "店內人氣王！一半臭豆腐一半豆腸，雙重享受。", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=800" },
       ]
     },
     {
       title: "🍜 飽足飯 / 麵食",
       items: [
-        { name: "羊肉羹系列", price: "70 / 80", note: "飯/麵/炊粉/冬粉", desc: "新鮮羊肉搭配特製羹湯，湯頭濃郁而不膩，飽足感十足。", img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?q=80&w=800" },
+        { name: "羊肉羹系列", price: "70 / 80", note: "飯/麵/炊粉/冬粉", desc: "新鮮羊肉搭配特製羹湯，湯頭濃郁而不膩。", img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?q=80&w=800" },
         { name: "肉羹系列", price: "70 / 80", note: "飯/麵/炊粉/冬粉", desc: "傳統古早味肉羹，手工肉漿口感紮實有彈性。", img: "https://images.unsplash.com/photo-1625398407796-82650a8c135f?q=80&w=800" },
         { name: "滷肉飯", price: "40 / 50", note: "經典美味", desc: "手切豬肉慢火燉煮，油脂豐富入口即化。", img: "https://images.unsplash.com/photo-1618449840665-9ed506d73a34?q=80&w=800" },
         { name: "湯麵", price: "40 / 50", note: "清爽首選", desc: "簡單卻不簡單的古早味湯麵，暖心又暖胃。", img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800" },
@@ -51,8 +51,8 @@ export default function Home() {
     {
       title: "🥗 精選小菜",
       items: [
-        { name: "鹹蜆", price: "80", note: "開胃首選", desc: "特製醬油與蒜頭醃漬，鹹甜適中，是絕佳的下酒與配飯小菜。", img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=800" },
-        { name: "自製泡菜", price: "50", note: "爽口解膩", desc: "酸甜適中的台式泡菜，脆口多汁，搭配炸物最對味。", img: "https://images.unsplash.com/photo-1583224964978-2257b960c3d3?q=80&w=800" },
+        { name: "鹹蜆", price: "80", note: "開胃首選", desc: "特製醬油與蒜頭醃漬，鹹甜開胃的經典小菜。", img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=800" },
+        { name: "自製泡菜", price: "50", note: "爽口解膩", desc: "酸甜適中的台式泡菜，脆口多汁。", img: "https://images.unsplash.com/photo-1583224964978-2257b960c3d3?q=80&w=800" },
         { name: "滷蛋", price: "15", note: "鹹香入味", desc: "慢火滷製，蛋白Q彈、蛋黃綿密。", img: "https://images.unsplash.com/photo-1605333396915-47ed6b68a00e?q=80&w=800" },
       ]
     },
@@ -60,7 +60,7 @@ export default function Home() {
       title: "🥣 暖心湯品",
       items: [
         { name: "羊肉/肉羹湯", price: "60", note: "精華濃縮", desc: "更能品嚐到羊肉的鮮美與勾芡的滑順。", img: "https://images.unsplash.com/photo-1594759077573-057404e38930?q=80&w=800" },
-        { name: "小腸豬血湯", price: "60", note: "真材實料", desc: "鮮甜湯頭搭配新鮮豬血與滷製入味的小腸，層次感十足。", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=800" },
+        { name: "小腸豬血湯", price: "60", note: "真材實料", desc: "鮮甜湯頭搭配新鮮豬血與小腸。", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=800" },
         { name: "豬血湯/小腸湯", price: "30", note: "銅板美食", desc: "新鮮現煮，簡單美味的銅板價選擇。", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=800" },
       ]
     }
@@ -71,10 +71,8 @@ export default function Home() {
   const handleScroll = () => {
     const container = scrollRef.current;
     if (!container) return;
-
     if (container.scrollLeft > 20) setShowArrow(false);
 
-    // 檢測目前畫面上最靠近中心的卡片
     let currentIdx = 0;
     let minDistance = Infinity;
     const centerX = container.scrollLeft + container.offsetWidth / 2;
@@ -90,7 +88,6 @@ export default function Home() {
       }
     });
 
-    // 根據索引判斷目前的 Tab
     let tabIdx = 0;
     if (currentIdx <= 2) tabIdx = 0;
     else if (currentIdx <= 6) tabIdx = 1;
@@ -150,7 +147,6 @@ export default function Home() {
           <div className="h-1.5 w-24 bg-amber-500 rounded-full"></div>
         </div>
 
-        {/* 分類 Tabs：具備置中捲動功能 */}
         <div ref={navRef} className="flex overflow-x-auto pb-4 mb-10 gap-3 no-scrollbar justify-start md:justify-center relative">
           {categories.map((cat, idx) => (
             <button
@@ -174,7 +170,8 @@ export default function Home() {
             {allItems.map((item, i) => (
               <div 
                 key={i} 
-                ref={el => itemRefs.current[i] = el}
+                // 修正點：改為明確的 void 回傳格式，解決 Next.js 16 型別錯誤
+                ref={(el) => { itemRefs.current[i] = el; }}
                 className="min-w-[85vw] md:min-w-[380px] snap-center bg-white rounded-[2.5rem] overflow-hidden shadow-md border border-amber-100 flex flex-col group/card"
               >
                 <div className="h-64 overflow-hidden relative">
@@ -200,15 +197,15 @@ export default function Home() {
           <div className="space-y-10">
             <h3 className="text-4xl font-bold text-amber-400 mb-6 underline decoration-amber-500 underline-offset-8">來店品嚐</h3>
             <div className="space-y-8">
-              <div className="flex items-start gap-4"><span className="bg-amber-400 text-slate-900 px-3 py-1 rounded font-black shadow-lg shrink-0">住址</span><p className="text-xl leading-relaxed text-slate-200">527 彰化縣大城鄉南平路 352 號<br/><span className="text-sm text-amber-400 font-mono font-bold">(Plus Code: V83C+F8)</span></p></div>
-              <div className="flex items-start gap-4"><span className="bg-amber-400 text-slate-900 px-3 py-1 rounded font-black shadow-lg shrink-0">預約</span><div className="space-y-6"><p className="text-slate-400 text-sm font-bold flex items-center gap-2">點擊號碼直接撥打</p><div className="flex flex-col gap-4">
+              <div className="flex items-start gap-4"><span className="bg-amber-400 text-slate-900 px-3 py-1 rounded font-black shadow-lg">住址</span><p className="text-xl leading-relaxed text-slate-200">527 彰化縣大城鄉南平路 352 號<br/><span className="text-sm text-amber-400 font-mono font-bold">(Plus Code: V83C+F8)</span></p></div>
+              <div className="flex items-start gap-4"><span className="bg-amber-400 text-slate-900 px-3 py-1 rounded font-black shadow-lg">預約</span><div className="space-y-6"><p className="text-slate-400 text-sm font-bold flex items-center gap-2">點擊號碼直接撥打</p><div className="flex flex-col gap-4">
                 <a href="tel:0955421750" className="text-3xl font-black text-amber-400 hover:text-white transition-colors tracking-tight">0955-421750</a>
                 <a href="tel:0981807989" className="text-3xl font-black text-amber-400 hover:text-white transition-colors tracking-tight">0981-807989</a>
               </div></div></div>
             </div>
           </div>
           <div className="h-[450px] w-full rounded-[3rem] overflow-hidden border-8 border-slate-800 shadow-2xl relative group">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3655.828694086658!2d120.2678129!3d23.8510103!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346e96807cc909ef%3A0xc3c94295e8654c60!2zNTI35b2w5YyW57ij5aSn5Z-O6YSJ5Y2X5bmz6LevMzUy6Jmf!5e0!3m2!1szh-TW!2stw!4v1740562000000!5m2!1szh-TW!2stw" width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3655.4851253457193!2d120.27419167589574!3d23.854611078598822!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346c2688b1f8342f%3A0xe100587d4653a992!2zNTI35b2w5YyW57ij5aSn5Z-O6YSJ5Y2X5bmz6LevMzUy6Jmf!5e0!3m2!1szh-TW!2stw!4v1700000000000!5m2!1szh-TW!2stw" width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
           </div>
         </div>
       </section>
