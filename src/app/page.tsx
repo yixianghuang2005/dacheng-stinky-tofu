@@ -1,23 +1,27 @@
 "use client";
 import React, { useState, useEffect, useRef } from 'react';
 
+// 將靜態資料移出元件，避免重複渲染
+const slogans = ["外酥內嫩的極致誘惑", "鮮甜濃郁的舌尖饗宴"];
+
 export default function Home() {
   const [sloganIndex, setSloganIndex] = useState(0);
   const [activeTab, setActiveTab] = useState(0);
   const [showArrow, setShowArrow] = useState(true);
-  const scrollRef = useRef(null);
-  
-  const slogans = ["外酥內嫩的極致誘惑", "鮮甜濃郁的舌尖饗宴"];
+
+  // 增加明確的型別定義
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setSloganIndex((prev) => (prev + 1) % slogans.length);
     }, 2500);
     return () => clearInterval(timer);
-  }, [slogans.length]);
+  }, []);
 
   const handleScroll = () => {
-    if (scrollRef.current && (scrollRef.current as HTMLDivElement).scrollLeft > 20) {
+    // 增加安全檢查，確保 current 不為 null
+    if (scrollRef.current && scrollRef.current.scrollLeft > 20) {
       setShowArrow(false);
     }
   };
@@ -78,8 +82,8 @@ export default function Home() {
         </div>
         <div className="mt-8 z-10">
           <p className="text-xl text-amber-900 font-bold mb-6">彰化大城南平路 352 號 · 在地美食首選</p>
-          <button 
-            onClick={() => document.getElementById('menu')?.scrollIntoView({behavior:'smooth'})}
+          <button
+            onClick={() => document.getElementById('menu')?.scrollIntoView({ behavior: 'smooth' })}
             className="bg-slate-900 text-white px-10 py-4 rounded-xl font-black hover:bg-black hover:scale-105 transition-all shadow-2xl"
           >
             查看美味菜單
@@ -100,13 +104,13 @@ export default function Home() {
               onClick={() => {
                 setActiveTab(idx);
                 setShowArrow(true);
-                if (scrollRef.current) (scrollRef.current as HTMLDivElement).scrollTo({ left: 0, behavior: 'smooth' });
+                // 使用選擇性鏈接 (optional chaining) 防止報錯
+                scrollRef.current?.scrollTo({ left: 0, behavior: 'smooth' });
               }}
-              className={`whitespace-nowrap px-8 py-3 rounded-full font-black transition-all duration-300 ${
-                activeTab === idx 
-                ? "bg-amber-500 text-white shadow-xl scale-105" 
-                : "bg-white text-slate-500 border border-amber-100 hover:bg-amber-50"
-              }`}
+              className={`whitespace-nowrap px-8 py-3 rounded-full font-black transition-all duration-300 ${activeTab === idx
+                  ? "bg-amber-500 text-white shadow-xl scale-105"
+                  : "bg-white text-slate-500 border border-amber-100 hover:bg-amber-50"
+                }`}
             >
               {cat.title}
             </button>
@@ -124,14 +128,14 @@ export default function Home() {
             </div>
           )}
 
-          <div 
+          <div
             ref={scrollRef}
             onScroll={handleScroll}
             className="flex overflow-x-auto gap-6 pb-12 snap-x snap-mandatory no-scrollbar px-2"
           >
             {categories[activeTab].items.map((item, i) => (
-              <div 
-                key={i} 
+              <div
+                key={i}
                 className="min-w-[85vw] md:min-w-[380px] snap-center bg-white rounded-[2.5rem] overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 border border-amber-100 flex flex-col group/card"
               >
                 <div className="h-64 overflow-hidden relative">
@@ -172,7 +176,7 @@ export default function Home() {
               <div className="flex items-start gap-4">
                 <span className="bg-amber-400 text-slate-900 px-3 py-1 rounded font-black shadow-lg shrink-0">住址</span>
                 <p className="text-xl leading-relaxed text-slate-200">
-                  527 彰化縣大城鄉南平路 352 號<br/>
+                  527 彰化縣大城鄉南平路 352 號<br />
                   <span className="text-sm text-amber-400 font-mono font-bold">(Plus Code: V83C+F8)</span>
                 </p>
               </div>
@@ -193,10 +197,11 @@ export default function Home() {
             </div>
           </div>
           <div className="h-[450px] w-full rounded-[3rem] overflow-hidden border-8 border-slate-800 shadow-2xl">
-              <iframe 
-               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.793740924707!2d120.3155713!3d23.8569848!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3469395f848be547%3A0x6b8f368f5b8f368f!2zNTI35b2w5YyW57ij5aSn5Z-O6YSJ5Y2X5bmz6LevMzUy6Jmf!5e0!3m2!1szh-TW!2stw!4v1700000000000!5m2!1szh-TW!2stw" 
-               width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" 
-               referrerPolicy="no-referrer-when-downgrade">
+            {/* 修正：src 需為有效的 Google Map Embed 連結才能正確顯示內容 */}
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.7932824982!2d120.32047!3d23.858582!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346c108170b00001%3A0x6c764e528a49c9f2!2zNTI35b2w5YyW57ij5aSn5Z-O6YSJ5Y2X5bmz6LevMzUy6Jmf!5e0!3m2!1szh-TW!2stw!4v1700000000000"
+              width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade">
             </iframe>
           </div>
         </div>
