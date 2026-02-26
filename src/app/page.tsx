@@ -14,10 +14,10 @@ export default function Home() {
       setSloganIndex((prev) => (prev + 1) % slogans.length);
     }, 2500);
     return () => clearInterval(timer);
-  }, []);
+  }, [slogans.length]);
 
   const handleScroll = () => {
-    if (scrollRef.current && scrollRef.current.scrollLeft > 20) {
+    if (scrollRef.current && (scrollRef.current as HTMLDivElement).scrollLeft > 20) {
       setShowArrow(false);
     }
   };
@@ -26,30 +26,30 @@ export default function Home() {
     {
       title: "🔥 招牌炸物 (可素食)",
       items: [
-        { name: "香酥臭豆腐", price: "60", note: "招牌必點", desc: "外皮極致酥脆，搭配手工台式泡菜與獨門醬汁，在地傳承的好味道。", img: "https://images.unsplash.com/photo-1563245372-f21724e3856d?q=80&w=800" },
-        { name: "脆皮豆腸", price: "60", note: "外酥內 Q", desc: "特製豆捲炸至金黃，層次分明，咬下瞬間豆香與酥脆感交織。", img: "https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?q=80&w=800" },
+        { name: "香酥臭豆腐", price: "60", note: "招牌必點", desc: "外皮極致酥脆，搭配手工台式泡菜與獨門醬汁。", img: "https://images.unsplash.com/photo-1563245372-f21724e3856d?q=80&w=800" },
+        { name: "脆皮豆腸", price: "60", note: "外酥內 Q", desc: "特製豆捲炸至金黃，層次分明，老饕最愛。", img: "https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?q=80&w=800" },
         { name: "綜合 (臭豆腐+豆腸)", price: "60", note: "一次滿足", desc: "店內人氣王！一半臭豆腐一半豆腸，雙重享受。", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=800" },
       ]
     },
     {
       title: "🍜 飽足飯 / 麵食",
       items: [
-        { name: "羊肉羹麵/飯", price: "小70 / 大80", note: "鮮甜濃郁", desc: "新鮮羊肉搭配特製羹湯，湯頭濃郁而不膩，飽足感十足。", img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?q=80&w=800" },
-        { name: "肉羹麵/飯", price: "小70 / 大80", note: "在地首選", desc: "傳統古早味肉羹，手工肉漿口感紮實有彈性。", img: "https://images.unsplash.com/photo-1625398407796-82650a8c135f?q=80&w=800" },
+        { name: "羊肉羹麵/飯", price: "小70 / 大80", note: "鮮甜濃郁", desc: "新鮮羊肉搭配特製羹湯，飽足感十足。", img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?q=80&w=800" },
+        { name: "肉羹麵/飯", price: "小70 / 大80", note: "在地首選", desc: "傳統古早味肉羹，口感紮實有彈性。", img: "https://images.unsplash.com/photo-1625398407796-82650a8c135f?q=80&w=800" },
         { name: "滷肉飯", price: "小40 / 大50", note: "經典美味", desc: "手切豬肉慢火燉煮，油脂豐富入口即化。", img: "https://images.unsplash.com/photo-1618449840665-9ed506d73a34?q=80&w=800" },
       ]
     },
     {
       title: "🥗 精選小菜",
       items: [
-        { name: "鹹蜆", price: "80", note: "古早味", desc: "特製醬油與蒜頭醃漬，鹹甜開胃的經典小菜。", img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=800" },
+        { name: "鹹蜆", price: "80", note: "古早味", desc: "特製醬油與蒜頭醃漬，開胃經典小菜。", img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=800" },
         { name: "自製泡菜", price: "50", note: "爽口解膩", desc: "酸甜適中的台式泡菜，脆口多汁。", img: "https://images.unsplash.com/photo-1583224964978-2257b960c3d3?q=80&w=800" },
       ]
     },
     {
       title: "🥣 暖心湯品",
       items: [
-        { name: "小腸豬血湯", price: "60", note: "真材實料", desc: "大份量新鮮豬血搭配滷製小腸，湯頭層次豐富。", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=800" },
+        { name: "小腸豬血湯", price: "60", note: "真材實料", desc: "鮮嫩豬血搭配小腸，湯頭層次豐富。", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=800" },
         { name: "羊肉羹湯", price: "60", note: "精華所在", desc: "更能品嚐到羊肉的鮮美與勾芡的滑順。", img: "https://images.unsplash.com/photo-1594759077573-057404e38930?q=80&w=800" },
       ]
     }
@@ -57,10 +57,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-yellow-50 font-sans text-slate-900 scroll-smooth">
-      {/* 導覽列 */}
       <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-yellow-200">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-          {/* 修改點：改成黑色字體 text-slate-900 */}
           <h1 className="text-xl md:text-2xl font-black text-slate-900 tracking-tighter">大城香酥臭豆腐、羊肉羹</h1>
           <div className="space-x-8 hidden md:flex font-bold text-slate-700">
             <a href="#hero" className="hover:text-amber-500 transition">首頁</a>
@@ -70,7 +68,6 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero 區塊 */}
       <section id="hero" className="h-[65vh] flex flex-col items-center justify-center bg-amber-400 text-center px-4 relative overflow-hidden shadow-inner">
         <div className="relative h-24 md:h-32 w-full flex items-center justify-center z-10">
           {slogans.map((text, index) => (
@@ -80,9 +77,7 @@ export default function Home() {
           ))}
         </div>
         <div className="mt-8 z-10">
-          {/* 修改點：改成在地美食首選 */}
           <p className="text-xl text-amber-900 font-bold mb-6">彰化大城南平路 352 號 · 在地美食首選</p>
-          {/* 修改點：按鈕文字改成白色 text-white */}
           <button 
             onClick={() => document.getElementById('menu')?.scrollIntoView({behavior:'smooth'})}
             className="bg-slate-900 text-white px-10 py-4 rounded-xl font-black hover:bg-black hover:scale-105 transition-all shadow-2xl"
@@ -92,14 +87,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 菜單區塊 */}
       <section id="menu" className="max-w-6xl mx-auto py-20 px-6">
         <div className="flex flex-col items-center mb-12 text-center">
           <h3 className="text-4xl font-black text-slate-900 mb-2 italic">MENU</h3>
           <div className="h-1.5 w-24 bg-amber-500 rounded-full"></div>
         </div>
 
-        {/* 分類 Tabs */}
         <div className="flex overflow-x-auto pb-4 mb-10 gap-3 no-scrollbar justify-start md:justify-center">
           {categories.map((cat, idx) => (
             <button
@@ -107,7 +100,7 @@ export default function Home() {
               onClick={() => {
                 setActiveTab(idx);
                 setShowArrow(true);
-                scrollRef.current?.scrollTo({ left: 0, behavior: 'smooth' });
+                if (scrollRef.current) (scrollRef.current as HTMLDivElement).scrollTo({ left: 0, behavior: 'smooth' });
               }}
               className={`whitespace-nowrap px-8 py-3 rounded-full font-black transition-all duration-300 ${
                 activeTab === idx 
@@ -120,7 +113,6 @@ export default function Home() {
           ))}
         </div>
 
-        {/* 商品展示滑動區 */}
         <div className="relative group">
           {showArrow && categories[activeTab].items.length > 1 && (
             <div className="absolute -right-2 top-1/2 -translate-y-1/2 z-20 animate-bounce-horizontal pointer-events-none">
@@ -172,7 +164,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 資訊與地圖區塊 */}
       <section id="info" className="bg-slate-900 text-white py-24 px-6">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-10">
@@ -185,32 +176,15 @@ export default function Home() {
                   <span className="text-sm text-amber-400 font-mono font-bold">(Plus Code: V83C+F8)</span>
                 </p>
               </div>
-              
               <div className="flex items-start gap-4">
                 <span className="bg-amber-400 text-slate-900 px-3 py-1 rounded font-black shadow-lg shrink-0">預約</span>
                 <div className="space-y-6">
-                  <p className="text-slate-400 text-sm font-bold flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
-                    </svg>
-                    點擊號碼直接撥打
-                  </p>
+                  <p className="text-slate-400 text-sm font-bold flex items-center gap-2">點擊號碼直接撥打</p>
                   <div className="flex flex-col gap-4">
                     <a href="tel:0955421750" className="group flex items-center gap-3 w-fit">
-                      <div className="bg-amber-500/20 p-2 rounded-full group-hover:bg-amber-500 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-amber-400 group-hover:text-slate-900">
-                          <path fillRule="evenodd" d="M1.5 4.5a3 3 0 0 1 3-3h1.372c.86 0 1.61.586 1.819 1.42l.515 2.061c.242.967-.25 1.972-1.156 2.425l-2.162 1.081a19.335 19.335 0 0 0 5.302 5.302l1.081-2.162c.453-.906 1.458-1.398 2.425-1.156l2.061.515c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 0 1-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5Z" clipRule="evenodd" />
-                        </svg>
-                      </div>
                       <span className="text-3xl font-black text-amber-400 group-hover:text-white transition-colors tracking-tight">0955-421750</span>
                     </a>
-
                     <a href="tel:0981807989" className="group flex items-center gap-3 w-fit">
-                      <div className="bg-amber-500/20 p-2 rounded-full group-hover:bg-amber-500 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-amber-400 group-hover:text-slate-900">
-                          <path fillRule="evenodd" d="M1.5 4.5a3 3 0 0 1 3-3h1.372c.86 0 1.61.586 1.819 1.42l.515 2.061c.242.967-.25 1.972-1.156 2.425l-2.162 1.081a19.335 19.335 0 0 0 5.302 5.302l1.081-2.162c.453-.906 1.458-1.398 2.425-1.156l2.061.515c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 0 1-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5Z" clipRule="evenodd" />
-                        </svg>
-                      </div>
                       <span className="text-3xl font-black text-amber-400 group-hover:text-white transition-colors tracking-tight">0981-807989</span>
                     </a>
                   </div>
@@ -218,12 +192,10 @@ export default function Home() {
               </div>
             </div>
           </div>
-
-          <div className="h-[450px] w-full rounded-[3rem] overflow-hidden border-8 border-slate-800 shadow-2xl relative group">
+          <div className="h-[450px] w-full rounded-[3rem] overflow-hidden border-8 border-slate-800 shadow-2xl">
               <iframe 
-               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3655.8858349286463!2d120.31551697603378!3d23.834200878613474!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346961c0282b9921%3A0x63345806654a1cc8!2z5aSn5Z-O6aaZ6酥6臭6豆腐!5e0!3m2!1szh-TW!2stw!4v1710000000000!5m2!1szh-TW!2stw" 
+               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.793740924707!2d120.3155713!3d23.8569848!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3469395f848be547%3A0x6b8f368f5b8f368f!2zNTI35b2w5YyW57ij5aSn5Z-O6YSJ5Y2X5bmz6LevMzUy6Jmf!5e0!3m2!1szh-TW!2stw!4v1700000000000!5m2!1szh-TW!2stw" 
                width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" 
-               className="grayscale-[0.1] contrast-[1.1] group-hover:grayscale-0 transition-all duration-500"
                referrerPolicy="no-referrer-when-downgrade">
             </iframe>
           </div>
