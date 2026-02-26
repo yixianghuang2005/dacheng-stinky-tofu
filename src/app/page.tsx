@@ -8,7 +8,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState(0);
   const [showArrow, setShowArrow] = useState(true);
   
-  // 明確型別定義，解決 Vercel Build Failed 問題
+  // 修正點：必須明確指定型別為 HTMLDivElement，否則 Vercel 會報錯
   const scrollRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -20,11 +20,11 @@ export default function Home() {
     return () => clearInterval(timer);
   }, []);
 
-  // 當 activeTab 改變時，自動將上方選單的標籤置中
+  // 聯動功能：當 activeTab 改變時，上方選單自動將該標籤置中
   useEffect(() => {
-    const activeBtn = navRef.current?.children[activeTab] as HTMLElement;
-    if (activeBtn && navRef.current) {
-      const container = navRef.current;
+    const container = navRef.current;
+    if (container && container.children[activeTab]) {
+      const activeBtn = container.children[activeTab] as HTMLElement;
       const scrollLeft = activeBtn.offsetLeft - container.offsetWidth / 2 + activeBtn.offsetWidth / 2;
       container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
     }
@@ -35,8 +35,8 @@ export default function Home() {
       title: "🔥 招牌炸物 (可素食)",
       items: [
         { name: "香酥臭豆腐", price: "60", note: "招牌必點", desc: "外皮極致酥脆，搭配手工台式泡菜與獨門醬汁。", img: "https://images.unsplash.com/photo-1563245372-f21724e3856d?q=80&w=800" },
-        { name: "脆皮豆腸", price: "60", note: "外酥內 Q", desc: "特製豆捲炸至金黃，層次分明，老饕最愛。", img: "https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?q=80&w=800" },
-        { name: "綜合 (臭豆腐+豆腸)", price: "60", note: "一次滿足", desc: "店內人氣王！一半臭豆腐一半豆腸，雙重享受。", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=800" },
+        { name: "脆皮豆腸", price: "60", note: "外酥內 Q", desc: "特製豆捲炸至金黃，層次分明，咬下瞬間豆香與酥脆感交織。", img: "https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?q=80&w=800" },
+        { name: "綜合 (豆腐+豆腸)", price: "60", note: "一次滿足", desc: "店內人氣王！一半臭豆腐一半豆腸，雙重享受。", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=800" },
       ]
     },
     {
@@ -45,35 +45,36 @@ export default function Home() {
         { name: "羊肉羹系列", price: "70 / 80", note: "飯/麵/炊粉/冬粉", desc: "新鮮羊肉搭配特製羹湯，湯頭濃郁而不膩，飽足感十足。", img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?q=80&w=800" },
         { name: "肉羹系列", price: "70 / 80", note: "飯/麵/炊粉/冬粉", desc: "傳統古早味肉羹，手工肉漿口感紮實有彈性。", img: "https://images.unsplash.com/photo-1625398407796-82650a8c135f?q=80&w=800" },
         { name: "滷肉飯", price: "40 / 50", note: "經典美味", desc: "手切豬肉慢火燉煮，油脂豐富入口即化。", img: "https://images.unsplash.com/photo-1618449840665-9ed506d73a34?q=80&w=800" },
-        { name: "湯麵", price: "40 / 50", note: "清爽首選", desc: "古早味湯頭搭配Q彈麵條。", img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800" },
+        { name: "湯麵", price: "40 / 50", note: "清爽首選", desc: "簡單卻不簡單的古早味湯麵，暖心又暖胃。", img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800" },
       ]
     },
     {
       title: "🥗 精選小菜",
       items: [
-        { name: "鹹蜆", price: "80", note: "古早味", desc: "特製醬油與蒜頭醃漬，開胃經典小菜。", img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=800" },
-        { name: "自製泡菜", price: "50", note: "爽口解膩", desc: "酸甜適中的台式泡菜，脆口多汁。", img: "https://images.unsplash.com/photo-1583224964978-2257b960c3d3?q=80&w=800" },
-        { name: "滷蛋", price: "15", note: "入味十足", desc: "慢火滷製，香Q彈牙。", img: "https://images.unsplash.com/photo-1605333396915-47ed6b68a00e?q=80&w=800" },
+        { name: "鹹蜆", price: "80", note: "開胃首選", desc: "特製醬油與蒜頭醃漬，鹹甜適中，是絕佳的下酒與配飯小菜。", img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=800" },
+        { name: "自製泡菜", price: "50", note: "爽口解膩", desc: "酸甜適中的台式泡菜，脆口多汁，搭配炸物最對味。", img: "https://images.unsplash.com/photo-1583224964978-2257b960c3d3?q=80&w=800" },
+        { name: "滷蛋", price: "15", note: "鹹香入味", desc: "慢火滷製，蛋白Q彈、蛋黃綿密。", img: "https://images.unsplash.com/photo-1605333396915-47ed6b68a00e?q=80&w=800" },
       ]
     },
     {
       title: "🥣 暖心湯品",
       items: [
-        { name: "羊肉/肉羹湯", price: "60", note: "真材實料", desc: "純羹湯享受，鮮美濃郁。", img: "https://images.unsplash.com/photo-1594759077573-057404e38930?q=80&w=800" },
-        { name: "小腸豬血湯", price: "60", note: "老饕必點", desc: "新鮮豬血與洗淨小腸，經典口味。", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=800" },
-        { name: "豬血湯 / 小腸湯", price: "30", note: "銅板美食", desc: "簡單溫暖的在地湯品。", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=800" },
+        { name: "羊肉/肉羹湯", price: "60", note: "精華濃縮", desc: "更能品嚐到羊肉的鮮美與勾芡的滑順。", img: "https://images.unsplash.com/photo-1594759077573-057404e38930?q=80&w=800" },
+        { name: "小腸豬血湯", price: "60", note: "真材實料", desc: "鮮甜湯頭搭配新鮮豬血與滷製入味的小腸，層次感十足。", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=800" },
+        { name: "豬血湯/小腸湯", price: "30", note: "銅板美食", desc: "新鮮現煮，簡單美味的銅板價選擇。", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=800" },
       ]
     }
   ];
 
+  const allItems = categories.flatMap(cat => cat.items);
+
   const handleScroll = () => {
-    if (!scrollRef.current) return;
     const container = scrollRef.current;
-    
-    // 隱藏向右滑動箭頭
+    if (!container) return;
+
     if (container.scrollLeft > 20) setShowArrow(false);
 
-    // 檢測目前畫面上最靠近中心的卡片是哪一個類群
+    // 檢測目前畫面上最靠近中心的卡片
     let currentIdx = 0;
     let minDistance = Infinity;
     const centerX = container.scrollLeft + container.offsetWidth / 2;
@@ -89,8 +90,7 @@ export default function Home() {
       }
     });
 
-    // 取得該卡片所屬的分類索引 (這裡簡化處理，根據卡片總數分配)
-    // 炸物(0-2), 飯麵(3-6), 小菜(7-9), 湯品(10-12)
+    // 根據索引判斷目前的 Tab
     let tabIdx = 0;
     if (currentIdx <= 2) tabIdx = 0;
     else if (currentIdx <= 6) tabIdx = 1;
@@ -102,21 +102,18 @@ export default function Home() {
 
   const scrollToCategory = (idx: number) => {
     setActiveTab(idx);
-    let targetItemIdx = 0;
-    if (idx === 1) targetItemIdx = 3;
-    if (idx === 2) targetItemIdx = 7;
-    if (idx === 3) targetItemIdx = 10;
+    let targetIdx = 0;
+    if (idx === 1) targetIdx = 3;
+    if (idx === 2) targetIdx = 7;
+    if (idx === 3) targetIdx = 10;
 
-    const targetEl = itemRefs.current[targetItemIdx];
+    const targetEl = itemRefs.current[targetIdx];
     if (targetEl && scrollRef.current) {
       const container = scrollRef.current;
-      const scrollLeft = targetEl.offsetLeft - container.offsetWidth / 2 + targetEl.offsetWidth / 2;
-      container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+      const scrollPos = targetEl.offsetLeft - container.offsetWidth / 2 + targetEl.offsetWidth / 2;
+      container.scrollTo({ left: scrollPos, behavior: 'smooth' });
     }
   };
-
-  // 攤平所有品項以便於 Refs 追蹤
-  const allItems = categories.flatMap(cat => cat.items);
 
   return (
     <div className="min-h-screen bg-yellow-50 font-sans text-slate-900 scroll-smooth">
@@ -149,11 +146,11 @@ export default function Home() {
 
       <section id="menu" className="max-w-6xl mx-auto py-20 px-6">
         <div className="flex flex-col items-center mb-12 text-center">
-          <h3 className="text-4xl font-black text-slate-900 mb-2 italic tracking-widest">MENU</h3>
+          <h3 className="text-4xl font-black text-slate-900 mb-2 italic">MENU</h3>
           <div className="h-1.5 w-24 bg-amber-500 rounded-full"></div>
         </div>
 
-        {/* 分類 Tabs - 加入置中鎖定功能 */}
+        {/* 分類 Tabs：具備置中捲動功能 */}
         <div ref={navRef} className="flex overflow-x-auto pb-4 mb-10 gap-3 no-scrollbar justify-start md:justify-center relative">
           {categories.map((cat, idx) => (
             <button
@@ -169,17 +166,16 @@ export default function Home() {
         <div className="relative group">
           {showArrow && <div className="absolute -right-2 top-1/2 -translate-y-1/2 z-20 animate-bounce-horizontal pointer-events-none"><div className="bg-amber-600/80 p-3 rounded-full text-white shadow-2xl backdrop-blur-sm"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg></div></div>}
 
-          {/* 橫向滾動容器 */}
           <div 
             ref={scrollRef}
             onScroll={handleScroll}
-            className="flex overflow-x-auto gap-6 pb-12 snap-x snap-mandatory no-scrollbar px-[10vw]"
+            className="flex overflow-x-auto gap-6 pb-12 snap-x snap-mandatory no-scrollbar px-[5vw]"
           >
             {allItems.map((item, i) => (
               <div 
                 key={i} 
                 ref={el => itemRefs.current[i] = el}
-                className="min-w-[75vw] md:min-w-[380px] snap-center bg-white rounded-[2.5rem] overflow-hidden shadow-md border border-amber-100 flex flex-col group/card"
+                className="min-w-[85vw] md:min-w-[380px] snap-center bg-white rounded-[2.5rem] overflow-hidden shadow-md border border-amber-100 flex flex-col group/card"
               >
                 <div className="h-64 overflow-hidden relative">
                   <img src={item.img} alt={item.name} className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110" />
@@ -199,7 +195,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 聯絡與資訊區塊 */}
       <section id="info" className="bg-slate-900 text-white py-24 px-6">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-10">
@@ -213,7 +208,7 @@ export default function Home() {
             </div>
           </div>
           <div className="h-[450px] w-full rounded-[3rem] overflow-hidden border-8 border-slate-800 shadow-2xl relative group">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1825.1328400000002!2d120.2731!3d23.8554!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346e999999999999%3A0x9999999999999999!2z576p5Z-O6aaZ6酥6Iit6LGG6IWQ!5e0!3m2!1szh-TW!2stw!4v1700000000000!5m2!1szh-TW!2stw" width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3655.828694086658!2d120.2678129!3d23.8510103!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346e96807cc909ef%3A0xc3c94295e8654c60!2zNTI35b2w5YyW57ij5aSn5Z-O6YSJ5Y2X5bmz6LevMzUy6Jmf!5e0!3m2!1szh-TW!2stw!4v1740562000000!5m2!1szh-TW!2stw" width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
           </div>
         </div>
       </section>
